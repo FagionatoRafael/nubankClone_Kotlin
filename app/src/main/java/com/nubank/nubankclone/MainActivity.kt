@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nubank.nubankclone.adapter.AdapterPagamentos
+import com.nubank.nubankclone.adapter.AdapterProduto
 import com.nubank.nubankclone.databinding.ActivityMainBinding
 import com.nubank.nubankclone.model.Pagamento
+import com.nubank.nubankclone.model.Produto
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapterPagamentos: AdapterPagamentos
+    private lateinit var adapterProduto: AdapterProduto
     private val listaPagamento: MutableList<Pagamento> = mutableListOf()
+    private val listProdutos: MutableList<Produto> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +30,13 @@ class MainActivity : AppCompatActivity() {
         adapterPagamentos = AdapterPagamentos(this, listaPagamento)
         recyclerIcons.adapter = adapterPagamentos
         listaIconesPagamentos()
+
+        val recyclerProdutos = binding.recycleProdutos
+        recyclerProdutos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerProdutos.setHasFixedSize(true)
+        adapterProduto = AdapterProduto(this, listProdutos)
+        recyclerProdutos.adapter = adapterProduto
+        listaProdutosInformacao()
     }
 
     private fun listaIconesPagamentos() {
@@ -42,5 +53,16 @@ class MainActivity : AppCompatActivity() {
             listaPagamento.add(pyment)
         }
 
+    }
+
+    private fun listaProdutosInformacao() {
+        val lis = listOf(
+            Produto("Participe da Promoção Tudo no Roxinho e concorra a..."),
+            Produto("Chegou o débito automatico da fatura do cartão"),
+            Produto("Conheça a conta PJ: prática e livre de burocracia para se..."),
+            Produto("Salve seus amigos da burocracia: Faça um convite..."))
+        for (pro in lis) {
+            listProdutos.add(pro)
+        }
     }
 }
